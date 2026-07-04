@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{SERVICE}} в {{CITY}} | {{DOMAIN}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; color: #1a1a1a; line-height: 1.6; }
+    .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header Navigation */
+    nav {
+      background: white;
+      padding: 15px 0;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+      position: sticky;
+      top: 0;
+      z-index: 50;
+    }
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    nav .brand { font-size: 22px; font-weight: 700; color: #2563eb; }
+    nav a { color: #666; text-decoration: none; margin-left: 30px; transition: color 0.2s; }
+    nav a:hover { color: #2563eb; }
+
+    /* Hero Banner */
+    .hero {
+      background: linear-gradient(to right, #2563eb, #1e40af);
+      color: white;
+      padding: 80px 0;
+      text-align: center;
+    }
+    .hero h1 { font-size: 48px; margin-bottom: 20px; }
+    .hero p { font-size: 20px; opacity: 0.95; }
+
+    /* Sections */
+    section { padding: 70px 0; }
+    section.alt { background: #f5f5f5; }
+    h2 { font-size: 38px; margin-bottom: 40px; color: #1a1a1a; }
+    h3 { font-size: 24px; margin-top: 25px; margin-bottom: 15px; color: #1a1a1a; }
+    p { font-size: 16px; margin-bottom: 15px; color: #555; line-height: 1.8; }
+
+    /* Grid Cards */
+    .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; margin: 40px 0; }
+    .card {
+      background: white;
+      padding: 35px;
+      border-radius: 10px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+      transition: box-shadow 0.3s;
+    }
+    .card:hover { box-shadow: 0 8px 20px rgba(0,0,0,0.12); }
+    .card h4 { font-size: 20px; color: #2563eb; margin-bottom: 15px; }
+
+    /* Lists */
+    ul { margin: 20px 0 20px 25px; }
+    li { margin-bottom: 10px; }
+
+    /* CTA Box */
+    .cta {
+      background: linear-gradient(to right, #16a34a, #15803d);
+      color: white;
+      padding: 60px;
+      text-align: center;
+      border-radius: 10px;
+      margin: 50px 0;
+    }
+    .cta h2 { color: white; margin-bottom: 20px; }
+    .cta p { color: white; font-size: 18px; }
+
+    /* Buttons */
+    button, a.button {
+      display: inline-block;
+      background: #2563eb;
+      color: white;
+      padding: 14px 40px;
+      border: none;
+      border-radius: 6px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      text-decoration: none;
+      margin-top: 15px;
+      transition: background 0.3s;
+    }
+    button:hover, a.button:hover { background: #1e40af; }
+
+    .cta button {
+      background: white;
+      color: #16a34a;
+    }
+    .cta button:hover { background: #f0f0f0; }
+
+    /* Price Table */
+    .price-table {
+      width: 100%;
+      margin: 30px 0;
+      border-collapse: collapse;
+      background: white;
+    }
+    .price-table th, .price-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid #e0e0e0;
+    }
+    .price-table th { background: #f5f5f5; font-weight: 600; }
+    .price-table tr:hover { background: #fafafa; }
+
+    /* Footer */
+    footer {
+      background: #1f2937;
+      color: white;
+      padding: 40px 0;
+      text-align: center;
+    }
+    footer p { color: #ccc; margin: 8px 0; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 32px; }
+      h2 { font-size: 28px; }
+      nav a { margin-left: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <div class="brand">{{DOMAIN}}</div>
+    <div>
+      <a href="#main">Главная</a>
+      <a href="#about">О услуге</a>
+      <a href="#benefits">Преимущества</a>
+      <a href="#prices">Цены</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1>{{SERVICE}} в {{CITY}}</h1>
+    <p>{{HERO_SUBTITLE}}</p>
+  </div>
+</section>
+
+<!-- Main Content -->
+<section id="about">
+  <div class="container">
+    <h2>{{INTRO_TITLE}}</h2>
+    <p>{{INTRO_CONTENT}}</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>✅ {{BENEFIT_1}}</h4>
+        <p>{{BENEFIT_1_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>✅ {{BENEFIT_2}}</h4>
+        <p>{{BENEFIT_2_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>✅ {{BENEFIT_3}}</h4>
+        <p>{{BENEFIT_3_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Problems & Solutions -->
+<section class="alt">
+  <div class="container">
+    <h2>{{PROBLEMS_TITLE}}</h2>
+
+    <h3>Основные проблемы:</h3>
+    <ul>
+      <li>{{PROBLEM_1}}</li>
+      <li>{{PROBLEM_2}}</li>
+      <li>{{PROBLEM_3}}</li>
+    </ul>
+
+    <h3>Как мы их решаем:</h3>
+    <p>{{SOLUTIONS_CONTENT}}</p>
+  </div>
+</section>
+
+<!-- Process -->
+<section id="benefits">
+  <div class="container">
+    <h2>{{PROCESS_TITLE}}</h2>
+
+    <div class="cards">
+      <div class="card">
+        <h4>1. {{STEP_1_TITLE}}</h4>
+        <p>{{STEP_1_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>2. {{STEP_2_TITLE}}</h4>
+        <p>{{STEP_2_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>3. {{STEP_3_TITLE}}</h4>
+        <p>{{STEP_3_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us -->
+<section class="alt">
+  <div class="container">
+    <h2>{{WHY_TITLE}}</h2>
+    <p>{{WHY_CONTENT}}</p>
+
+    <div class="cards">
+      <div class="card">
+        <h4>⭐ {{REASON_1}}</h4>
+      </div>
+      <div class="card">
+        <h4>⭐ {{REASON_2}}</h4>
+      </div>
+      <div class="card">
+        <h4>⭐ {{REASON_3}}</h4>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section>
+  <div class="container">
+    <div class="cta">
+      <h2>{{CTA_TITLE}}</h2>
+      <p>{{CTA_DESC}}</p>
+      <button>{{CTA_BUTTON}}</button>
+    </div>
+  </div>
+</section>
+
+<!-- Prices -->
+<section id="prices" class="alt">
+  <div class="container">
+    <h2>{{PRICES_TITLE}}</h2>
+
+    <table class="price-table">
+      <tr>
+        <th>Услуга</th>
+        <th>Описание</th>
+        <th>Цена</th>
+      </tr>
+      <tr>
+        <td><strong>{{PRICE_1_NAME}}</strong></td>
+        <td>{{PRICE_1_DESC}}</td>
+        <td><strong>{{PRICE_1_AMOUNT}}</strong></td>
+      </tr>
+      <tr>
+        <td><strong>{{PRICE_2_NAME}}</strong></td>
+        <td>{{PRICE_2_DESC}}</td>
+        <td><strong>{{PRICE_2_AMOUNT}}</strong></td>
+      </tr>
+      <tr>
+        <td><strong>{{PRICE_3_NAME}}</strong></td>
+        <td>{{PRICE_3_DESC}}</td>
+        <td><strong>{{PRICE_3_AMOUNT}}</strong></td>
+      </tr>
+    </table>
+  </div>
+</section>
+
+<!-- FAQ -->
+<section>
+  <div class="container">
+    <h2>Часто задаваемые вопросы</h2>
+
+    <h3>{{FAQ_1_Q}}</h3>
+    <p>{{FAQ_1_A}}</p>
+
+    <h3>{{FAQ_2_Q}}</h3>
+    <p>{{FAQ_2_A}}</p>
+
+    <h3>{{FAQ_3_Q}}</h3>
+    <p>{{FAQ_3_A}}</p>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="contact">
+  <div class="container">
+    <h3>{{DOMAIN}}</h3>
+    <p>{{FOOTER_ADDRESS}}</p>
+    <p>📞 {{FOOTER_PHONE}}</p>
+    <p>📧 {{FOOTER_EMAIL}}</p>
+    <p style="margin-top: 20px; opacity: 0.7;">&copy; 2024 {{DOMAIN}}. Все права защищены.</p>
+  </div>
+</footer>
+
+</body>
+</html>

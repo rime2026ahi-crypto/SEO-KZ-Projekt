@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>pSEO Platform - Архитектура с Доменами</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; padding: 40px 20px; background: #f8f9fa; color: #333; }
+.container { max-width: 1200px; margin: 0 auto; }
+h1 { color: #2563eb; margin-bottom: 30px; text-align: center; }
+h2 { color: #1e40af; margin-top: 40px; margin-bottom: 20px; padding-bottom: 10px; border-bottom: 2px solid #dbeafe; }
+h3 { color: #1e40af; margin-top: 20px; margin-bottom: 10px; }
+.architecture { background: white; border-radius: 12px; padding: 30px; margin-bottom: 30px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+.diagram { background: #f0f9ff; border: 2px solid #0ea5e9; border-radius: 8px; padding: 20px; margin: 20px 0; font-family: monospace; overflow-x: auto; font-size: 13px; line-height: 1.6; }
+.server { background: #dbeafe; border-left: 4px solid #0284c7; padding: 15px; margin: 10px 0; border-radius: 4px; }
+.database { background: #dcfce7; border-left: 4px solid #16a34a; padding: 15px; margin: 10px 0; border-radius: 4px; }
+.step { background: #f0fdf4; border-left: 4px solid #22c55e; padding: 12px; margin: 10px 0; border-radius: 4px; }
+.code-block { background: #1f2937; color: #10b981; padding: 15px; border-radius: 6px; overflow-x: auto; margin: 15px 0; font-family: 'Courier New', monospace; font-size: 12px; }
+table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+th, td { padding: 12px; text-align: left; border-bottom: 1px solid #e5e7eb; }
+th { background: #f3f4f6; font-weight: 600; }
+tr:hover { background: #f9fafb; }
+ul { margin-left: 20px; }
+li { margin-bottom: 8px; }
+</style>
+</head>
+<body>
+<div class="container">
+
+<h1>🏗️ pSEO Platform - Архитектура с Доменами</h1>
+
+<div class="architecture">
+<h2>📋 Обзор системы</h2>
+
+<div class="diagram">
+┌─────────────────────────────────────────────────────────────┐
+│                     ИНТЕРНЕТ                                 │
+├─────────────────────────────────────────────────────────────┤
+│                                                               │
+│ admin.platform.kz     santehnik.kz      elektrik.kz         │
+│ ┌─────────────────┐  ┌──────────────┐  ┌──────────────┐    │
+│ │ АДМИН-ПАНЕЛЬ    │  │  КОНТЕНТ     │  │  КОНТЕНТ     │    │
+│ │ (Next.js)       │  │ (Static HTML)│  │ (Static HTML)│    │
+│ │                 │  │              │  │              │    │
+│ │ • Генерация     │  │ /almaty-     │  │ /almaty-     │    │
+│ │ • Мониторинг    │  │  remont-trub │  │  elektrik    │    │
+│ │ • QA            │  │ /turgen-...  │  │ /turgen-...  │    │
+│ │ • Публикация    │  │              │  │              │    │
+│ └────────┬────────┘  └──────┬───────┘  └──────┬───────┘    │
+│          │                  │                 │              │
+│          └──────────────────┼─────────────────┘              │
+│                             │                                │
+│                    ┌────────▼────────┐                       │
+│                    │   PostgreSQL    │                       │
+│                    │   БД            │                       │
+│                    │                 │                       │
+│                    │ • Контент       │                       │
+│                    │ • Домены        │                       │
+│                    │ • Метаданные    │                       │
+│                    └─────────────────┘                       │
+│                                                               │
+└─────────────────────────────────────────────────────────────┘
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>🖥️ Компоненты системы</h2>
+
+<div class="server">
+<strong>1. АДМИН-ПАНЕЛЬ (admin.platform.kz или localhost:3000)</strong>
+<ul>
+<li>Next.js 14 App Router</li>
+<li>Vercel или собственный VPS</li>
+<li>Функции: Генерация → Мониторинг → QA → Публикация</li>
+<li>Подключена к единой PostgreSQL БД</li>
+</ul>
+</div>
+
+<div class="server">
+<strong>2. ФРОНТЕНД ДОМЕНЫ (santehnik.kz, elektrik.kz, и т.д.)</strong>
+<ul>
+<li>Static HTML + CSS (генерируется админ-панелью)</li>
+<li>Или динамические Next.js страницы</li>
+<li>Все читают из одной БД</li>
+<li>SEO-оптимизированные URL: /almaty-remont-trub/, /turgen-remont-trub/</li>
+</ul>
+</div>
+
+<div class="database">
+<strong>3. ЕДИНАЯ БАЗА ДАННЫХ (PostgreSQL)</strong>
+<ul>
+<li>Хранит весь контент для всех доменов</li>
+<li>Таблица domains (santehnik.kz, elektrik.kz, ...)</li>
+<li>Таблица pages (все генерированные страницы)</li>
+<li>Таблица locations (города)</li>
+<li>Таблица templates (шаблоны HTML)</li>
+</ul>
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>🔗 Как подключить домен: 5 шагов</h2>
+
+<div class="step">
+<strong>ШАГ 1: Купил домен santehnik.kz 🏪</strong>
+<ul>
+<li>Зарегистрировал у регистратора (Reg.kz, Nameserver и т.д.)</li>
+<li>Получил доступ к DNS управлению</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>ШАГ 2: Настроил DNS записи 🔧</strong>
+<table>
+<tr>
+<th>Вариант</th>
+<th>DNS Запись</th>
+<th>Описание</th>
+</tr>
+<tr>
+<td><strong>На Vercel</strong></td>
+<td>CNAME: platform.vercel.app</td>
+<td>Если хостишь на Vercel (рекомендуется)</td>
+</tr>
+<tr>
+<td><strong>На VPS</strong></td>
+<td>A: 123.45.67.89</td>
+<td>Если у тебя собственный сервер</td>
+</tr>
+</table>
+</div>
+
+<div class="step">
+<strong>ШАГ 3: Добавил домен в БД 💾</strong>
+<div class="code-block">
+INSERT INTO domains (
+  domain_name,
+  niche_id,
+  status,
+  created_at
+) VALUES (
+  'santehnik.kz',
+  1,
+  'active',
+  NOW()
+);
+</div>
+</div>
+
+<div class="step">
+<strong>ШАГ 4: Настроил SSL сертификат 🔐</strong>
+<ul>
+<li>На Vercel: автоматически</li>
+<li>На VPS: Let's Encrypt (бесплатно)</li>
+<li>Все домены → https:// обязательно</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>ШАГ 5: Генерирую контент из админ-панели 🚀</strong>
+<ul>
+<li>Выбираю: Домен = "santehnik.kz", Нишу = "Сантехника"</li>
+<li>Указываю города: Almaty, Turgen, Shymkent</li>
+<li>Платформа генерирует страницы и сохраняет в БД</li>
+<li>Фронтенд santehnik.kz показывает контент!</li>
+</ul>
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>🔄 Как работает публикация</h2>
+
+<div class="diagram">
+1. АДМИН-ПАНЕЛЬ (Генерация)
+   └─→ Выбираешь домен + нишу + города
+   └─→ Создается промпт для Claude API
+   └─→ API генерирует контент
+   └─→ Сохраняется в таблицу pages (domain_id = santehnik.kz)
+
+2. QA ПРОВЕРКА
+   └─→ Берутся страницы из pages для santehnik.kz
+   └─→ Показываются в админ-панели
+   └─→ Ты одобряешь или отклоняешь
+   └─→ Статус меняется на published
+
+3. ПУБЛИКАЦИЯ ВОЛНАМИ
+   └─→ Берутся одобренные страницы
+   └─→ Публикуются волнами по 100 шт каждые 3 дня
+   └─→ Дата публикации сохраняется в БД
+
+4. ФРОНТЕНД ПОКАЗЫВАЕТ
+   └─→ Пользователь идет на santehnik.kz/almaty-remont-trub
+   └─→ Next.js запрашивает БД
+   └─→ Находит страницу где domain='santehnik.kz' и slug='almaty-remont-trub'
+   └─→ Отображает HTML
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>🗄️ Структура БД для доменов</h2>
+
+<table>
+<tr>
+<th>Таблица</th>
+<th>Поле</th>
+<th>Тип</th>
+<th>Описание</th>
+</tr>
+<tr>
+<td rowspan="5"><strong>domains</strong></td>
+<td>id</td>
+<td>INT</td>
+<td>ID домена</td>
+</tr>
+<tr>
+<td>domain_name</td>
+<td>VARCHAR</td>
+<td>santehnik.kz, elektrik.kz и т.д.</td>
+</tr>
+<tr>
+<td>niche_id</td>
+<td>INT</td>
+<td>Какой нише принадлежит</td>
+</tr>
+<tr>
+<td>status</td>
+<td>ENUM</td>
+<td>active, inactive, suspended</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMP</td>
+<td>Дата добавления</td>
+</tr>
+<tr>
+<td rowspan="7"><strong>pages</strong></td>
+<td>id</td>
+<td>INT</td>
+<td>ID страницы</td>
+</tr>
+<tr>
+<td>domain_id</td>
+<td>INT</td>
+<td>Ссылка на домен</td>
+</tr>
+<tr>
+<td>slug</td>
+<td>VARCHAR</td>
+<td>almaty-remont-trub</td>
+</tr>
+<tr>
+<td>content</td>
+<td>TEXT</td>
+<td>HTML контент страницы</td>
+</tr>
+<tr>
+<td>status</td>
+<td>ENUM</td>
+<td>draft, pending_qa, published</td>
+</tr>
+<tr>
+<td>published_at</td>
+<td>TIMESTAMP</td>
+<td>Когда опубликована</td>
+</tr>
+<tr>
+<td>created_at</td>
+<td>TIMESTAMP</td>
+<td>Когда создана</td>
+</tr>
+</table>
+
+</div>
+
+<div class="architecture">
+<h2>🚀 Как развернуть: 2 варианта</h2>
+
+<div class="server">
+<h3>✅ Вариант 1: Vercel (РЕКОМЕНДУЕТСЯ для начала)</h3>
+<ul>
+<li><strong>Стоимость:</strong> $20-100/месяц</li>
+<li><strong>Что включено:</strong> Хостинг, SSL, CDN, autoscaling</li>
+<li><strong>Процесс:</strong></li>
+</ul>
+<div class="code-block">
+1. Загрузишь код на GitHub
+2. Подключишь Vercel к GitHub репо
+3. Vercel автоматически deploy при каждом push
+4. В Vercel dashboard добавишь домены
+5. Переведешь DNS у регистратора на Vercel
+   DNS: CNAME platform.vercel.app
+6. Через 5-10 минут домен работает! 🎉
+</div>
+</div>
+
+<div class="server">
+<h3>⚙️ Вариант 2: Собственный VPS (для профессионалов)</h3>
+<ul>
+<li><strong>Стоимость:</strong> $5-20/месяц</li>
+<li><strong>Поставщики:</strong> Digital Ocean, Linode, AWS, Hetzner</li>
+<li><strong>Процесс:</strong></li>
+</ul>
+<div class="code-block">
+1. Купить VPS (2GB RAM - достаточно для 100+ доменов)
+2. SSH подключиться к серверу
+3. Установить Node.js, PostgreSQL, nginx
+4. Клонировать код проекта
+5. npm install && npm run build
+6. Запустить с pm2: pm2 start npm --name app -- start
+7. Настроить nginx как reverse proxy
+8. Получить SSL с certbot: certbot certonly -d santehnik.kz
+9. Настроить DNS: A запись на IP сервера
+10. Готово!
+</div>
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>⚡ Что нужно сделать в коде</h2>
+
+<div class="step">
+<strong>1. Добавить разделе "/admin/domains" в админ-панель</strong>
+<ul>
+<li>Показывать список всех добавленных доменов</li>
+<li>Кнопка "+ Добавить новый домен"</li>
+<li>Форма: domain_name, niche, status</li>
+<li>Возможность редактировать/удалять</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>2. Обновить БД схему</strong>
+<ul>
+<li>Добавить таблицу domains</li>
+<li>Добавить поле domain_id в pages таблицу</li>
+<li>Миграция Drizzle ORM</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>3. Обновить API генерации</strong>
+<ul>
+<li>При создании генерации: выбирать домен</li>
+<li>Сохранять pages привязанными к домену</li>
+<li>При публикации: учитывать domain_id</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>4. Создать фронтенд для доменов</strong>
+<ul>
+<li>Динамические маршруты: app/[domain]/[slug]/page.tsx</li>
+<li>При запросе santehnik.kz/almaty-remont-trub:</li>
+<li>1. Получи domain='santehnik.kz' и slug='almaty-remont-trub'</li>
+<li>2. Запросу БД: SELECT * FROM pages WHERE domain_id=1 AND slug='almaty-remont-trub'</li>
+<li>3. Отобрази content как HTML</li>
+</ul>
+</div>
+
+<div class="step">
+<strong>5. Развернуть на Vercel</strong>
+<ul>
+<li>Запушить код на GitHub</li>
+<li>Vercel автоматически deploy</li>
+<li>Добавить домены в Vercel</li>
+<li>Обновить DNS у регистратора</li>
+<li>Готово!</li>
+</ul>
+</div>
+
+</div>
+
+<div class="architecture">
+<h2>❓ Частые вопросы</h2>
+
+<h3>Q: Нужен ли отдельный сервер для каждого домена?</h3>
+<p><strong>A:</strong> НЕТ! Один сервер с одной БД может обслуживать 100+ доменов. Это очень масштабируемо и экономно.</p>
+
+<h3>Q: Сколько doменов я могу иметь?</h3>
+<p><strong>A:</strong> Столько, сколько захочешь! Система масштабируется на 1000+ доменов без проблем.</p>
+
+<h3>Q: Что если один домен упадет в Google?</h3>
+<p><strong>A:</strong> Остальные домены продолжают работать. Это называется "домейн диверсификация" и это отличная защита.</p>
+
+<h3>Q: Как быстро будут открываться страницы?</h3>
+<p><strong>A:</strong> Очень быстро! Страницы генерируются один раз и кешируются. Среднее время загрузки: 50-150ms.</p>
+
+<h3>Q: Сколько это стоит в месяц?</h3>
+<p><strong>A:</strong> На Vercel: от $20/месяц за админ-панель. Домены: $10-15 каждый (один раз в год). Доступно!</p>
+
+</div>
+
+</div>
+
+</body>
+</html>

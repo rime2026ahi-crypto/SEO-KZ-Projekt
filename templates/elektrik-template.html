@@ -1,0 +1,412 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{SERVICE}} в городе {{CITY}} | {{DOMAIN}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="keywords" content="{{KEYWORDS}}">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; background: #fafafa; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 100px 0;
+      text-align: center;
+    }
+    .hero h1 { font-size: 52px; margin-bottom: 20px; font-weight: 700; }
+    .hero p { font-size: 22px; opacity: 0.95; }
+
+    /* Sticky Header */
+    header {
+      background: white;
+      padding: 20px 0;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    header .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    header .logo {
+      font-size: 26px;
+      font-weight: bold;
+      color: #f59e0b;
+    }
+    header nav a {
+      color: #333;
+      text-decoration: none;
+      margin-left: 35px;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+    header nav a:hover { color: #f59e0b; }
+
+    /* Sections */
+    section { padding: 80px 0; }
+    section h2 {
+      font-size: 40px;
+      color: #1f2937;
+      margin-bottom: 30px;
+      position: relative;
+      padding-bottom: 20px;
+    }
+    section h2::after {
+      content: '';
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      width: 80px;
+      height: 4px;
+      background: #f59e0b;
+    }
+
+    section h3 {
+      font-size: 26px;
+      color: #374151;
+      margin: 30px 0 15px;
+    }
+
+    section p {
+      font-size: 17px;
+      line-height: 1.9;
+      color: #555;
+      margin-bottom: 18px;
+    }
+
+    /* Features Grid */
+    .features {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+    .feature-card {
+      background: white;
+      padding: 40px;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.08);
+      transition: all 0.3s;
+      border-left: 5px solid #f59e0b;
+    }
+    .feature-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 12px 25px rgba(0,0,0,0.15);
+    }
+    .feature-card h4 {
+      font-size: 22px;
+      color: #f59e0b;
+      margin-bottom: 15px;
+    }
+    .feature-card p { color: #666; font-size: 16px; }
+
+    /* Stats */
+    .stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 40px;
+      margin: 50px 0;
+      text-align: center;
+    }
+    .stat-box h3 {
+      font-size: 48px;
+      color: #f59e0b;
+      margin: 0 0 10px;
+    }
+    .stat-box p {
+      font-size: 18px;
+      color: #666;
+      margin: 0;
+    }
+
+    /* Alternate sections */
+    .light-bg {
+      background: #f9fafb;
+    }
+
+    /* Timeline */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+    .timeline-item {
+      background: white;
+      padding: 30px;
+      margin: 30px 0;
+      border-radius: 8px;
+      border-left: 5px solid #f59e0b;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    }
+    .timeline-item h4 {
+      color: #f59e0b;
+      font-size: 20px;
+      margin-bottom: 10px;
+    }
+
+    /* CTA Button */
+    .btn {
+      display: inline-block;
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 16px 45px;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 16px;
+      margin-top: 20px;
+      transition: transform 0.3s;
+      border: none;
+      cursor: pointer;
+    }
+    .btn:hover { transform: scale(1.08); }
+
+    /* Call To Action Box */
+    .cta-box {
+      background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%);
+      color: white;
+      padding: 60px;
+      border-radius: 12px;
+      text-align: center;
+      margin: 60px 0;
+    }
+    .cta-box h2 {
+      color: white;
+      border-bottom: 3px solid white;
+    }
+    .cta-box h2::after { display: none; }
+    .cta-box p { color: white; font-size: 18px; }
+
+    /* Price Cards */
+    .price-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 30px;
+      margin: 50px 0;
+    }
+    .price-card {
+      background: white;
+      border: 2px solid #f59e0b;
+      padding: 40px;
+      border-radius: 12px;
+      text-align: center;
+      transition: transform 0.3s;
+    }
+    .price-card:hover { transform: scale(1.05); }
+    .price-card h4 { font-size: 24px; color: #1f2937; margin-bottom: 20px; }
+    .price { font-size: 42px; color: #f59e0b; font-weight: 700; margin: 20px 0; }
+    .price-desc { color: #666; margin-bottom: 20px; }
+
+    /* FAQ */
+    .faq-item {
+      background: white;
+      padding: 25px;
+      margin: 20px 0;
+      border-radius: 8px;
+      border-left: 4px solid #f59e0b;
+    }
+    .faq-item h4 {
+      color: #f59e0b;
+      font-size: 18px;
+      margin-bottom: 10px;
+    }
+
+    /* Footer */
+    footer {
+      background: #1f2937;
+      color: white;
+      padding: 50px 0 20px;
+      text-align: center;
+    }
+    footer p { margin: 8px 0; font-size: 16px; }
+    footer a { color: #f59e0b; text-decoration: none; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 36px; }
+      section h2 { font-size: 28px; }
+      header nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <div class="logo">⚡ {{DOMAIN}}</div>
+    <nav>
+      <a href="#services">Услуги</a>
+      <a href="#about">О нас</a>
+      <a href="#process">Как мы работаем</a>
+      <a href="#prices">Цены</a>
+      <a href="#faq">Вопросы</a>
+    </nav>
+  </div>
+</header>
+
+<!-- Hero Section -->
+<section class="hero">
+  <div class="container">
+    <h1>{{SERVICE}} в {{CITY}}</h1>
+    <p>{{HERO_SUBTITLE}}</p>
+  </div>
+</section>
+
+<!-- About Section -->
+<section id="about">
+  <div class="container">
+    <h2>{{ABOUT_TITLE}}</h2>
+    <p>{{ABOUT_CONTENT}}</p>
+
+    <div class="features">
+      <div class="feature-card">
+        <h4>{{FEATURE_1_TITLE}}</h4>
+        <p>{{FEATURE_1_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <h4>{{FEATURE_2_TITLE}}</h4>
+        <p>{{FEATURE_2_DESC}}</p>
+      </div>
+      <div class="feature-card">
+        <h4>{{FEATURE_3_TITLE}}</h4>
+        <p>{{FEATURE_3_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Stats Section -->
+<section class="light-bg">
+  <div class="container">
+    <h2>{{STATS_TITLE}}</h2>
+
+    <div class="stats">
+      <div class="stat-box">
+        <h3>{{STAT_1_NUMBER}}</h3>
+        <p>{{STAT_1_LABEL}}</p>
+      </div>
+      <div class="stat-box">
+        <h3>{{STAT_2_NUMBER}}</h3>
+        <p>{{STAT_2_LABEL}}</p>
+      </div>
+      <div class="stat-box">
+        <h3>{{STAT_3_NUMBER}}</h3>
+        <p>{{STAT_3_LABEL}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section id="process">
+  <div class="container">
+    <h2>{{PROCESS_TITLE}}</h2>
+    <p>{{PROCESS_INTRO}}</p>
+
+    <div class="timeline">
+      <div class="timeline-item">
+        <h4>Шаг 1: {{STEP_1_TITLE}}</h4>
+        <p>{{STEP_1_DESC}}</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Шаг 2: {{STEP_2_TITLE}}</h4>
+        <p>{{STEP_2_DESC}}</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Шаг 3: {{STEP_3_TITLE}}</h4>
+        <p>{{STEP_3_DESC}}</p>
+      </div>
+      <div class="timeline-item">
+        <h4>Шаг 4: {{STEP_4_TITLE}}</h4>
+        <p>{{STEP_4_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Box -->
+<section class="light-bg">
+  <div class="container">
+    <div class="cta-box">
+      <h2>{{CTA_MAIN_TITLE}}</h2>
+      <p>{{CTA_MAIN_DESC}}</p>
+      <button class="btn">{{CTA_BUTTON_TEXT}}</button>
+    </div>
+  </div>
+</section>
+
+<!-- Prices Section -->
+<section id="prices">
+  <div class="container">
+    <h2>{{PRICES_TITLE}}</h2>
+
+    <div class="price-cards">
+      <div class="price-card">
+        <h4>{{PRICE_1_NAME}}</h4>
+        <p class="price">{{PRICE_1_AMOUNT}}</p>
+        <p class="price-desc">{{PRICE_1_DESC}}</p>
+        <button class="btn">Заказать</button>
+      </div>
+      <div class="price-card">
+        <h4>{{PRICE_2_NAME}}</h4>
+        <p class="price">{{PRICE_2_AMOUNT}}</p>
+        <p class="price-desc">{{PRICE_2_DESC}}</p>
+        <button class="btn">Заказать</button>
+      </div>
+      <div class="price-card">
+        <h4>{{PRICE_3_NAME}}</h4>
+        <p class="price">{{PRICE_3_AMOUNT}}</p>
+        <p class="price-desc">{{PRICE_3_DESC}}</p>
+        <button class="btn">Заказать</button>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="light-bg">
+  <div class="container">
+    <h2>{{FAQ_TITLE}}</h2>
+
+    <div class="faq-item">
+      <h4>{{FAQ_1_Q}}</h4>
+      <p>{{FAQ_1_A}}</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>{{FAQ_2_Q}}</h4>
+      <p>{{FAQ_2_A}}</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>{{FAQ_3_Q}}</h4>
+      <p>{{FAQ_3_A}}</p>
+    </div>
+
+    <div class="faq-item">
+      <h4>{{FAQ_4_Q}}</h4>
+      <p>{{FAQ_4_A}}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <h3>{{DOMAIN}}</h3>
+    <p>{{FOOTER_ADDRESS}}</p>
+    <p>📞 {{FOOTER_PHONE}}</p>
+    <p>📧 <a href="mailto:{{FOOTER_EMAIL}}">{{FOOTER_EMAIL}}</a></p>
+    <p style="margin-top: 30px; opacity: 0.7;">&copy; 2024 {{DOMAIN}}. Все права защищены.</p>
+  </div>
+</footer>
+
+</body>
+</html>

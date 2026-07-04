@@ -1,0 +1,163 @@
+{
+  "slug": "santehnik",
+  "displayName": {
+    "ru": "Сантехнические услуги",
+    "kk": "Сантехника қызметтері"
+  },
+  "serviceCatalog": [
+    {
+      "id": "pipes-repair",
+      "name": "Ремонт труб",
+      "description": "Диагностика и ремонт водопроводных систем",
+      "pricingTier": "standard"
+    },
+    {
+      "id": "sink-install",
+      "name": "Установка раковин",
+      "description": "Монтаж и подключение раковин к водопроводу",
+      "pricingTier": "standard"
+    },
+    {
+      "id": "toilet-repair",
+      "name": "Ремонт унитазов",
+      "description": "Устранение поломок унитазов, замена комплектующих",
+      "pricingTier": "budget"
+    },
+    {
+      "id": "drain-cleaning",
+      "name": "Прочистка канализации",
+      "description": "Механическая и химическая прочистка труб",
+      "pricingTier": "standard"
+    },
+    {
+      "id": "water-heater",
+      "name": "Ремонт водонагревателей",
+      "description": "Диагностика и ремонт бойлеров, вода не горячая",
+      "pricingTier": "premium"
+    }
+  ],
+  "keywordClusters": [
+    {
+      "intent": "commercial",
+      "primary": "сантехник",
+      "secondaryKeywords": [
+        "услуги сантехника",
+        "вызов сантехника",
+        "сантехнические работы"
+      ],
+      "longTail": [
+        "сантехник срочно",
+        "сантехник недорого",
+        "опытный сантехник"
+      ]
+    },
+    {
+      "intent": "emergency",
+      "primary": "протечка воды",
+      "secondaryKeywords": [
+        "срочная помощь сантехника",
+        "авария водоснабжения",
+        "затопление"
+      ],
+      "longTail": [
+        "течёт труба",
+        "вода идёт из потолка",
+        "сломался унитаз"
+      ]
+    },
+    {
+      "intent": "informational",
+      "primary": "как починить трубу",
+      "secondaryKeywords": [
+        "профилактика водопровода",
+        "уход за сантехникой",
+        "когда менять трубы"
+      ],
+      "longTail": [
+        "почему течёт кран",
+        "как избежать протечки",
+        "современные трубы какие лучше"
+      ]
+    }
+  ],
+  "toneProfile": {
+    "voice": "профессиональный, дружелюбный, ориентированный на местного клиента",
+    "formality": "neutral",
+    "ctaStyle": "позвоните нам или закажите онлайн, быстрая диагностика",
+    "forbiddenPhrases": [
+      "самый дешёвый",
+      "гарантия на 100%",
+      "единственные кто может"
+    ]
+  },
+  "localFactSchema": [
+    {
+      "name": "district",
+      "type": "text",
+      "required": true,
+      "description": "Район города, куда выезжает сантехник"
+    },
+    {
+      "name": "waterUtility",
+      "type": "text",
+      "required": true,
+      "description": "Водоканал или коммунальное предприятие района"
+    },
+    {
+      "name": "waterHardness",
+      "type": "text",
+      "required": true,
+      "description": "Жёсткость воды в районе (низкая/средняя/высокая)"
+    },
+    {
+      "name": "avgPrices",
+      "type": "jsonb",
+      "required": true,
+      "description": "Средние цены на основные услуги в районе"
+    },
+    {
+      "name": "landmarks",
+      "type": "list",
+      "required": true,
+      "description": "Известные улицы, микрорайоны, ориентиры для описания зоны обслуживания"
+    }
+  ],
+  "modelRouting": {
+    "topTierCityThreshold": 100000,
+    "topTierModel": "claude-sonnet-5",
+    "longTailModel": "claude-haiku-4-5-20251001"
+  },
+  "seoDefaults": {
+    "titleTemplate": "{service} в {city} — квалифицированный сантехник | цена от {price}",
+    "metaTemplate": "Профессиональные сантехнические услуги в {city}. {service}. Опытный мастер, быстрый выезд в {district}. Звоните: {phone}",
+    "schemaOrgType": "Plumber"
+  },
+  "complianceOverrides": {
+    "minWordCount": 600,
+    "minWordCountTopTier": 1800,
+    "minUniqueness": 0.35,
+    "humanReviewSampleRate": 0.08
+  },
+  "blogTopics": [
+    {
+      "title": "Как избежать протечек",
+      "description": "Советы по профилактике водопровода",
+      "perRegion": false
+    },
+    {
+      "title": "Выбор правильного материала для труб",
+      "description": "Полипропилен, медь, нержавейка — сравнение",
+      "perRegion": false
+    },
+    {
+      "title": "Странные звуки в трубах — что означают",
+      "description": "Диагностика проблем по звукам",
+      "perRegion": false
+    },
+    {
+      "title": "Сезонная подготовка системы водоснабжения",
+      "description": "Чистка фильтров, подготовка к зиме/лету",
+      "perRegion": true
+    }
+  ]
+}

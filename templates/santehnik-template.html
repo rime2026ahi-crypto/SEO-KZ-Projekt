@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="kk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{{SERVICE}} в городе {{CITY}} | {{DOMAIN}}</title>
+  <meta name="description" content="{{META_DESCRIPTION}}">
+  <meta name="keywords" content="{{KEYWORDS}}">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; line-height: 1.6; color: #333; }
+    .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; }
+
+    /* Header */
+    header { background: linear-gradient(135deg, #2563eb 0%, #1e40af 100%); color: white; padding: 60px 0; text-align: center; }
+    header h1 { font-size: 48px; margin-bottom: 15px; text-shadow: 2px 2px 4px rgba(0,0,0,0.3); }
+    header .subtitle { font-size: 20px; opacity: 0.95; }
+
+    /* Navigation */
+    nav { background: white; padding: 15px 0; box-shadow: 0 2px 5px rgba(0,0,0,0.1); position: sticky; top: 0; z-index: 100; }
+    nav .container { display: flex; justify-content: space-between; align-items: center; }
+    nav .logo { font-size: 24px; font-weight: bold; color: #2563eb; }
+    nav a { color: #333; text-decoration: none; margin-left: 30px; transition: color 0.3s; }
+    nav a:hover { color: #2563eb; }
+
+    /* Main sections */
+    section { padding: 60px 0; }
+    section.light { background: #f8f9fa; }
+    section h2 { font-size: 36px; margin-bottom: 30px; color: #1e40af; border-bottom: 3px solid #2563eb; padding-bottom: 15px; }
+    section h3 { font-size: 24px; margin: 20px 0; color: #2563eb; }
+    section p { margin-bottom: 15px; font-size: 16px; line-height: 1.8; }
+
+    /* Grid layout */
+    .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; margin: 30px 0; }
+    .card { background: white; padding: 30px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.3s; }
+    .card:hover { transform: translateY(-5px); box-shadow: 0 8px 12px rgba(0,0,0,0.15); }
+    .card h4 { color: #2563eb; margin-bottom: 15px; font-size: 20px; }
+    .card p { color: #666; }
+
+    /* List styles */
+    ul, ol { margin: 20px 0 20px 30px; }
+    li { margin-bottom: 10px; }
+
+    /* CTA Button */
+    .cta-section { background: linear-gradient(135deg, #16a34a 0%, #15803d 100%); color: white; padding: 60px 0; text-align: center; }
+    .cta-section h2 { color: white; border-bottom: 3px solid white; }
+    .cta-button {
+      display: inline-block;
+      background: white;
+      color: #16a34a;
+      padding: 15px 50px;
+      font-size: 18px;
+      font-weight: bold;
+      border-radius: 5px;
+      text-decoration: none;
+      margin-top: 20px;
+      transition: transform 0.3s;
+      cursor: pointer;
+      border: none;
+    }
+    .cta-button:hover { transform: scale(1.05); }
+
+    /* Footer */
+    footer { background: #1f2937; color: white; padding: 40px 0; text-align: center; }
+    footer p { margin-bottom: 10px; }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      header h1 { font-size: 32px; }
+      section h2 { font-size: 24px; }
+      nav a { margin-left: 15px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- Navigation -->
+<nav>
+  <div class="container">
+    <div class="logo">{{DOMAIN}}</div>
+    <div>
+      <a href="#services">Услуги</a>
+      <a href="#about">О нас</a>
+      <a href="#why">Почему мы</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Header -->
+<header>
+  <div class="container">
+    <h1>{{SERVICE}} в {{CITY}}</h1>
+    <p class="subtitle">{{HEADER_SUBTITLE}}</p>
+  </div>
+</header>
+
+<!-- Introduction Section -->
+<section id="about">
+  <div class="container">
+    <h2>{{INTRO_TITLE}}</h2>
+    <p>{{INTRO_CONTENT}}</p>
+  </div>
+</section>
+
+<!-- Problems Section -->
+<section id="problems" class="light">
+  <div class="container">
+    <h2>{{PROBLEMS_TITLE}}</h2>
+    <p>{{PROBLEMS_INTRO}}</p>
+
+    <div class="grid">
+      <div class="card">
+        <h4>⚠️ {{PROBLEM_1_TITLE}}</h4>
+        <p>{{PROBLEM_1_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>⚠️ {{PROBLEM_2_TITLE}}</h4>
+        <p>{{PROBLEM_2_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>⚠️ {{PROBLEM_3_TITLE}}</h4>
+        <p>{{PROBLEM_3_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Why Us Section -->
+<section id="why">
+  <div class="container">
+    <h2>{{WHY_US_TITLE}}</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h4>⭐ {{BENEFIT_1}}</h4>
+      </div>
+      <div class="card">
+        <h4>⭐ {{BENEFIT_2}}</h4>
+      </div>
+      <div class="card">
+        <h4>⭐ {{BENEFIT_3}}</h4>
+      </div>
+    </div>
+
+    <h3>Как мы работаем:</h3>
+    <ol>
+      <li>{{STEP_1}}</li>
+      <li>{{STEP_2}}</li>
+      <li>{{STEP_3}}</li>
+      <li>{{STEP_4}}</li>
+    </ol>
+  </div>
+</section>
+
+<!-- Process Section -->
+<section class="light">
+  <div class="container">
+    <h2>{{PROCESS_TITLE}}</h2>
+    <p>{{PROCESS_CONTENT}}</p>
+
+    <div class="grid">
+      <div class="card">
+        <h4>1️⃣ Диагностика</h4>
+        <p>{{PROCESS_STEP_1}}</p>
+      </div>
+      <div class="card">
+        <h4>2️⃣ Планирование</h4>
+        <p>{{PROCESS_STEP_2}}</p>
+      </div>
+      <div class="card">
+        <h4>3️⃣ Выполнение</h4>
+        <p>{{PROCESS_STEP_3}}</p>
+      </div>
+      <div class="card">
+        <h4>4️⃣ Гарантия</h4>
+        <p>{{PROCESS_STEP_4}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Prices Section -->
+<section id="prices">
+  <div class="container">
+    <h2>{{PRICES_TITLE}}</h2>
+
+    <div class="grid">
+      <div class="card">
+        <h4>{{PRICE_1_NAME}}</h4>
+        <p style="font-size: 24px; color: #2563eb; font-weight: bold; margin: 15px 0;">{{PRICE_1_AMOUNT}}</p>
+        <p>{{PRICE_1_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>{{PRICE_2_NAME}}</h4>
+        <p style="font-size: 24px; color: #2563eb; font-weight: bold; margin: 15px 0;">{{PRICE_2_AMOUNT}}</p>
+        <p>{{PRICE_2_DESC}}</p>
+      </div>
+      <div class="card">
+        <h4>{{PRICE_3_NAME}}</h4>
+        <p style="font-size: 24px; color: #2563eb; font-weight: bold; margin: 15px 0;">{{PRICE_3_AMOUNT}}</p>
+        <p>{{PRICE_3_DESC}}</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA Section -->
+<section class="cta-section">
+  <div class="container">
+    <h2>{{CTA_TITLE}}</h2>
+    <p style="font-size: 18px; margin: 20px 0;">{{CTA_SUBTITLE}}</p>
+    <button class="cta-button">{{CTA_BUTTON_TEXT}}</button>
+    <p style="margin-top: 30px; font-size: 16px;">{{CTA_ADDITIONAL}}</p>
+  </div>
+</section>
+
+<!-- FAQ Section -->
+<section id="faq" class="light">
+  <div class="container">
+    <h2>{{FAQ_TITLE}}</h2>
+
+    <div>
+      <h3>{{FAQ_1_Q}}</h3>
+      <p>{{FAQ_1_A}}</p>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <h3>{{FAQ_2_Q}}</h3>
+      <p>{{FAQ_2_A}}</p>
+    </div>
+
+    <div style="margin-top: 30px;">
+      <h3>{{FAQ_3_Q}}</h3>
+      <p>{{FAQ_3_A}}</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer>
+  <div class="container">
+    <p><strong>{{DOMAIN}}</strong></p>
+    <p>{{FOOTER_ADDRESS}}</p>
+    <p>{{FOOTER_PHONE}}</p>
+    <p>{{FOOTER_EMAIL}}</p>
+    <p style="margin-top: 30px; opacity: 0.8;">&copy; 2024 {{DOMAIN}}. Все права защищены.</p>
+  </div>
+</footer>
+
+</body>
+</html>
