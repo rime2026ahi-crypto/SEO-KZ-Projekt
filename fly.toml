@@ -16,9 +16,6 @@ primary_region = "ams"
     { port = 443, handlers = ["tls", "http"], force_https = true }
   ]
 
-[checks]
-  enabled = true
-
 [[checks]]
   grace_period = "10s"
   interval = "30s"
