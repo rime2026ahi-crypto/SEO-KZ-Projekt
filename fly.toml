@@ -1,0 +1,29 @@
+app = "seo-kz-project"
+primary_region = "ams"
+
+[build]
+  builder = "heroku"
+
+[env]
+  NODE_ENV = "production"
+  NEXT_PUBLIC_API_URL = "https://seo-kz-project.fly.dev"
+
+[[services]]
+  protocol = "tcp"
+  internal_port = 3000
+  ports = [
+    { port = 80, handlers = ["http"], force_https = true },
+    { port = 443, handlers = ["tls", "http"], force_https = true }
+  ]
+
+[checks]
+  enabled = true
+
+[[checks]]
+  grace_period = "10s"
+  interval = "30s"
+  method = "http"
+  path = "/"
+  protocol = "http"
+  timeout = "5s"
+  type = "http"
