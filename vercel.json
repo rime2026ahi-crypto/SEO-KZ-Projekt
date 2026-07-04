@@ -4,11 +4,6 @@
   "installCommand": "npm install",
   "framework": "nextjs",
   "nodeVersion": "18.x",
-  "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/:path((?!_next/|api/|favicon\\.ico).*)",
-      "destination": "/"
-    }
-  ]
+  "outputDirectory": ".next",
+  "cleanUrls": true
 }
