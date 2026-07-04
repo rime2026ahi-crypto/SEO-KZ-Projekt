@@ -1,6 +1,16 @@
-FROM node:21-alpine
-WORKDIR /usr/src/app
-COPY . .
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY package*.json ./
 RUN npm install
-EXPOSE 80
-CMD [ "npm", "start" ]
+
+COPY . .
+RUN npm run build
+
+EXPOSE 3000
+
+ENV NODE_ENV=production
+ENV DATABASE_URL=$DATABASE_URL
+
+CMD ["npm", "start"]
