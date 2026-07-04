@@ -15,12 +15,3 @@ primary_region = "ams"
     { port = 80, handlers = ["http"], force_https = true },
     { port = 443, handlers = ["tls", "http"], force_https = true }
   ]
-
-[[checks]]
-  grace_period = "10s"
-  interval = "30s"
-  method = "http"
-  path = "/"
-  protocol = "http"
-  timeout = "5s"
-  type = "http"
