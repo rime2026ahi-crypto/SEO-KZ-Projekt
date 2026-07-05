@@ -1,3 +1,23 @@
+# Build stage
+FROM node:18-alpine AS builder
+
+WORKDIR /app
+
+# Copy only package files first (for better caching)
+COPY package*.json ./
+
+# Install dependencies
+RUN npm ci --only=production && \
+    npm install --save-dev typescript @types/node @types/react next eslint eslint-config-next
+
+# Copy source code
+COPY . .
+
+# Build Next.js with increased memory
+ENV NODE_OPTIONS="--max_old_space_size=512"
+RUN npm run build
+
+# Production stage
 FROM node:18-alpine
 
 WORKDIR /app
@@ -5,19 +25,17 @@ WORKDIR /app
 # Copy package files
 COPY package*.json ./
 
-# Install dependencies with verbose output
-RUN npm install --verbose || (echo "npm install failed" && exit 1)
+# Install only production dependencies
+RUN npm ci --only=production
 
-# Copy source code
-COPY . .
-
-# Build Next.js
-RUN npm run build || (echo "npm run build failed" && exit 1)
+# Copy built app from builder
+COPY --from=builder /app/.next ./.next
+COPY --from=builder /app/public ./public
 
 EXPOSE 3000
 
 ENV NODE_ENV=production
 ENV PORT=3000
+ENV NEXT_TELEMETRY_DISABLED=1
 
-# Start Next.js server
 CMD ["npm", "start"]
