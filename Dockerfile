@@ -6,9 +6,9 @@ WORKDIR /app
 # Copy only package files first (for better caching)
 COPY package*.json ./
 
-# Install dependencies
-RUN npm install && \
-    npm install --save-dev typescript @types/node @types/react next eslint eslint-config-next
+# Clean npm cache and install dependencies
+RUN npm cache clean --force && \
+    npm install
 
 # Copy source code
 COPY . .
