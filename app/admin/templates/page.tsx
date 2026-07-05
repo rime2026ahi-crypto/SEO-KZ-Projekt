@@ -1,9 +1,21 @@
 'use client';
 
 import { useState, useRef } from 'react';
-import { Palette, Plus, Eye, Download, Trash2, Lightbulb, FileText, X } from 'lucide-react';
+import { Palette, Plus, Eye, Download, Trash2, FileText, X } from 'lucide-react';
+
+interface Template {
+  id: string;
+  name: string;
+  niche: string;
+  uploadedDate: string;
+  size: number;
+}
 
 export default function TemplatesPage() {
+  const [templates, setTemplates] = useState<Template[]>([
+    { id: '1', name: 'sample.html', niche: 'santehnik', uploadedDate: '2024-06-15', size: 2048 },
+    { id: '2', name: 'locks.html', niche: 'slesari', uploadedDate: '2024-06-20', size: 1536 },
+  ]);
   const [showUploadModal, setShowUploadModal] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const [niche, setNiche] = useState('');
@@ -34,6 +46,14 @@ export default function TemplatesPage() {
       });
 
       if (res.ok) {
+        const newTemplate: Template = {
+          id: Date.now().toString(),
+          name: selectedFile.name,
+          niche,
+          uploadedDate: new Date().toISOString().split('T')[0],
+          size: selectedFile.size,
+        };
+        setTemplates([...templates, newTemplate]);
         alert('✅ Шаблон загружен!');
         setShowUploadModal(false);
         setSelectedFile(null);
@@ -45,6 +65,28 @@ export default function TemplatesPage() {
       alert('❌ Ошибка: ' + String(error));
     } finally {
       setIsUploading(false);
+    }
+  };
+
+  const handleViewTemplate = (id: string) => {
+    const template = templates.find(t => t.id === id);
+    if (template) {
+      alert(`📄 Шаблон: ${template.name}\nНиша: ${template.niche}\nЗагружен: ${template.uploadedDate}`);
+    }
+  };
+
+  const handleDownloadTemplate = (id: string) => {
+    const template = templates.find(t => t.id === id);
+    if (template) {
+      alert(`⬇️ Загружаю: ${template.name}...`);
+      // В реальной версии здесь был бы download
+    }
+  };
+
+  const handleDeleteTemplate = (id: string) => {
+    if (confirm('Удалить шаблон?')) {
+      setTemplates(templates.filter(t => t.id !== id));
+      alert('✅ Шаблон удален!');
     }
   };
 
@@ -122,49 +164,38 @@ export default function TemplatesPage() {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-bold text-gray-900">sample.html</h3>
+        {templates.map((template) => (
+          <div key={template.id} className="bg-white rounded-lg shadow-md p-6">
+            <div className="flex items-center gap-2">
+              <FileText className="w-5 h-5 text-gray-600" />
+              <h3 className="text-lg font-bold text-gray-900">{template.name}</h3>
+            </div>
+            <p className="text-gray-600 text-sm mt-2">Ниша: {template.niche}</p>
+            <p className="text-gray-600 text-sm">Загружен: {template.uploadedDate}</p>
+            <div className="mt-4 flex gap-2">
+              <button
+                onClick={() => handleViewTemplate(template.id)}
+                className="flex items-center gap-1 px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 text-sm"
+              >
+                <Eye className="w-4 h-4" />
+                Просмотр
+              </button>
+              <button
+                onClick={() => handleDownloadTemplate(template.id)}
+                className="flex items-center gap-1 px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 text-sm"
+              >
+                <Download className="w-4 h-4" />
+                Скачать
+              </button>
+              <button
+                onClick={() => handleDeleteTemplate(template.id)}
+                className="flex items-center justify-center px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-sm"
+              >
+                <Trash2 className="w-4 h-4" />
+              </button>
+            </div>
           </div>
-          <p className="text-gray-600 text-sm mt-2">Ниша: Сантехнические услуги</p>
-          <p className="text-gray-600 text-sm">Загружен: 2024-06-15</p>
-          <div className="mt-4 flex gap-2">
-            <button className="flex items-center gap-1 px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 text-sm">
-              <Eye className="w-4 h-4" />
-              Просмотр
-            </button>
-            <button className="flex items-center gap-1 px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 text-sm">
-              <Download className="w-4 h-4" />
-              Скачать
-            </button>
-            <button className="flex items-center justify-center px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-sm">
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
-
-        <div className="bg-white rounded-lg shadow-md p-6">
-          <div className="flex items-center gap-2">
-            <FileText className="w-5 h-5 text-gray-600" />
-            <h3 className="text-lg font-bold text-gray-900">locks.html</h3>
-          </div>
-          <p className="text-gray-600 text-sm mt-2">Ниша: Услуги слесаря</p>
-          <p className="text-gray-600 text-sm">Загружен: 2024-06-20</p>
-          <div className="mt-4 flex gap-2">
-            <button className="flex items-center gap-1 px-4 py-2 bg-blue-100 text-blue-600 rounded-lg hover:bg-blue-200 text-sm">
-              <Eye className="w-4 h-4" />
-              Просмотр
-            </button>
-            <button className="flex items-center gap-1 px-4 py-2 bg-gray-100 text-gray-600 rounded-lg hover:bg-gray-200 text-sm">
-              <Download className="w-4 h-4" />
-              Скачать
-            </button>
-            <button className="flex items-center justify-center px-4 py-2 bg-red-100 text-red-600 rounded-lg hover:bg-red-200 text-sm">
-              <Trash2 className="w-4 h-4" />
-            </button>
-          </div>
-        </div>
+        ))}
       </div>
 
       <div className="mt-8 bg-blue-50 border border-blue-200 rounded-lg p-6">
