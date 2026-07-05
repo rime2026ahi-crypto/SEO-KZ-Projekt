@@ -1,15 +1,15 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { Pool } from 'pg';
 
-export async function POST(request: NextRequest) {
+async function initializeDatabase() {
   try {
     const connectionString = process.env.DATABASE_URL;
 
     if (!connectionString) {
-      return NextResponse.json(
-        { error: 'DATABASE_URL not configured' },
-        { status: 500 }
-      );
+      return {
+        error: 'DATABASE_URL not configured',
+        status: 500,
+      };
     }
 
     const pool = new Pool({
@@ -20,7 +20,6 @@ export async function POST(request: NextRequest) {
     const client = await pool.connect();
 
     const queries = [
-      // Users
       `CREATE TABLE IF NOT EXISTS users (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         email VARCHAR(255) UNIQUE NOT NULL,
@@ -30,7 +29,6 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Niches
       `CREATE TABLE IF NOT EXISTS niches (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name VARCHAR(255) NOT NULL,
@@ -42,7 +40,6 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Locations
       `CREATE TABLE IF NOT EXISTS locations (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         name VARCHAR(255) NOT NULL,
@@ -56,7 +53,6 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Templates
       `CREATE TABLE IF NOT EXISTS templates (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         niche_id UUID REFERENCES niches(id) ON DELETE CASCADE,
@@ -68,7 +64,6 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Generation Batches
       `CREATE TABLE IF NOT EXISTS generation_batches (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         batch_id VARCHAR(100) UNIQUE NOT NULL,
@@ -89,7 +84,6 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Generated Pages
       `CREATE TABLE IF NOT EXISTS generated_pages (
         id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
         batch_id UUID REFERENCES generation_batches(id) ON DELETE CASCADE,
@@ -103,14 +97,12 @@ export async function POST(request: NextRequest) {
         updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       )`,
 
-      // Sample data - Niches
       `INSERT INTO niches (name, slug, description) VALUES
         ('Сантехнические услуги', 'santehnik', 'Услуги сантехника'),
         ('Электрические услуги', 'electrician', 'Услуги электрика'),
         ('Ремонт квартир', 'repair', 'Услуги по ремонту')
       ON CONFLICT (slug) DO NOTHING`,
 
-      // Sample data - Locations
       `INSERT INTO locations (name, slug, country, region) VALUES
         ('Алматы', 'almaty', 'Kazakhstan', 'Алматы'),
         ('Нур-Султан', 'nur-sultan', 'Kazakhstan', 'Акмола'),
@@ -120,22 +112,39 @@ export async function POST(request: NextRequest) {
       ON CONFLICT (slug) DO NOTHING`,
     ];
 
-    for (let i = 0; i < queries.length; i++) {
-      await client.query(queries[i]);
+    for (const query of queries) {
+      await client.query(query);
     }
 
     client.release();
     await pool.end();
 
-    return NextResponse.json(
-      { message: '✅ Database initialized successfully!' },
-      { status: 200 }
-    );
+    return {
+      message: '✅ Database initialized successfully!',
+      status: 200,
+    };
   } catch (error) {
     console.error('Database initialization error:', error);
-    return NextResponse.json(
-      { error: 'Database initialization failed', details: String(error) },
-      { status: 500 }
-    );
+    return {
+      error: 'Database initialization failed',
+      details: String(error),
+      status: 500,
+    };
   }
+}
+
+export async function GET(request: NextRequest) {
+  const result = await initializeDatabase();
+  return NextResponse.json(
+    result.message ? { message: result.message } : { error: result.error, details: result.details },
+    { status: result.status }
+  );
+}
+
+export async function POST(request: NextRequest) {
+  const result = await initializeDatabase();
+  return NextResponse.json(
+    result.message ? { message: result.message } : { error: result.error, details: result.details },
+    { status: result.status }
+  );
 }
