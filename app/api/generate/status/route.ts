@@ -10,13 +10,19 @@ export async function GET(request: NextRequest) {
 
     const progress = {
       batchId,
-      status: 'running',
-      total_pages: 100,
-      completed_pages: 45,
-      unique_pages: 42,
-      percentage: 45,
-      recent_pages: [],
-      logs: [],
+      status: 'generating',
+      progress: 45,
+      total: 100,
+      completed: 45,
+      failed: 2,
+      unique: 42,
+      duplicates: 1,
+      estimatedTimeRemaining: 180,
+      logs: [
+        '✅ Started generation...',
+        '📝 Processing cities...',
+        '⚡ Generating pages...',
+      ],
     };
 
     return NextResponse.json(progress);

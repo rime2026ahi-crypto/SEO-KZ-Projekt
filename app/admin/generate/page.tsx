@@ -35,7 +35,7 @@ export default function GeneratePage() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           mode: 'mode1',
-          niche,
+          niche_id: niche,
           cities: cities.split('\n').filter(c => c.trim()),
           services,
         }),
