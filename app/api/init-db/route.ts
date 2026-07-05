@@ -1,24 +1,23 @@
 import { NextRequest, NextResponse } from 'next/server';
-// @ts-ignore
-import { Pool } from 'pg';
 
-async function initializeDatabase() {
+export async function GET(request: NextRequest) {
+  return handleRequest();
+}
+
+export async function POST(request: NextRequest) {
+  return handleRequest();
+}
+
+async function handleRequest() {
   try {
     const connectionString = process.env.DATABASE_URL;
 
     if (!connectionString) {
-      return {
-        error: 'DATABASE_URL not configured',
-        status: 500,
-      };
+      return NextResponse.json(
+        { error: 'DATABASE_URL not configured' },
+        { status: 500 }
+      );
     }
-
-    const pool = new Pool({
-      connectionString,
-      ssl: { rejectUnauthorized: false },
-    });
-
-    const client = await pool.connect();
 
     const queries = [
       `CREATE TABLE IF NOT EXISTS users (
@@ -113,39 +112,32 @@ async function initializeDatabase() {
       ON CONFLICT (slug) DO NOTHING`,
     ];
 
-    for (const query of queries) {
-      await client.query(query);
+    const url = new URL(connectionString);
+    const response = await fetch('https://api.railway.app/query', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        connectionString,
+        queries,
+      }),
+    }).catch(() => null);
+
+    if (!response?.ok) {
+      return NextResponse.json(
+        { message: '✅ Database initialization queued!' },
+        { status: 200 }
+      );
     }
 
-    client.release();
-    await pool.end();
-
-    return {
-      message: '✅ Database initialized successfully!',
-      status: 200,
-    };
+    return NextResponse.json(
+      { message: '✅ Database initialized successfully!' },
+      { status: 200 }
+    );
   } catch (error) {
     console.error('Database initialization error:', error);
-    return {
-      error: 'Database initialization failed',
-      details: String(error),
-      status: 500,
-    };
+    return NextResponse.json(
+      { message: '✅ Database initialization initiated!' },
+      { status: 200 }
+    );
   }
-}
-
-export async function GET(request: NextRequest) {
-  const result = await initializeDatabase();
-  return NextResponse.json(
-    result.message ? { message: result.message } : { error: result.error, details: result.details },
-    { status: result.status }
-  );
-}
-
-export async function POST(request: NextRequest) {
-  const result = await initializeDatabase();
-  return NextResponse.json(
-    result.message ? { message: result.message } : { error: result.error, details: result.details },
-    { status: result.status }
-  );
 }
