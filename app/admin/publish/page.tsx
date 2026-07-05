@@ -1,8 +1,23 @@
 'use client';
 
+import { useState } from 'react';
 import { Upload, Lightbulb, CheckCircle2, Clock, AlertCircle, BarChart3, Calendar } from 'lucide-react';
 
 export default function PublishPage() {
+  const [isPublishing, setIsPublishing] = useState(false);
+
+  const handlePublishWave = async () => {
+    setIsPublishing(true);
+    try {
+      alert('📤 Публикация запущена... Волна будет опубликована через 24 часа!');
+      // Here would be API call: await fetch('/api/publish/wave', { method: 'POST' })
+    } catch (error) {
+      alert('❌ Ошибка при публикации');
+    } finally {
+      setIsPublishing(false);
+    }
+  };
+
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
@@ -57,9 +72,13 @@ export default function PublishPage() {
               В ОЖИДАНИИ
             </span>
           </div>
-          <button className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
+          <button
+            onClick={handlePublishWave}
+            disabled={isPublishing}
+            className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700 disabled:opacity-50"
+          >
             <Upload className="w-4 h-4" />
-            Опубликовать Сейчас
+            {isPublishing ? 'Публикую...' : 'Опубликовать Сейчас'}
           </button>
         </div>
 

@@ -1,8 +1,34 @@
 'use client';
 
+import { useState } from 'react';
 import { CheckCircle2, Eye, Lightbulb, ChevronLeft, ChevronRight, AlertCircle, Trash2, Edit, BarChart3 } from 'lucide-react';
 
 export default function QAPage() {
+  const [currentPage, setCurrentPage] = useState(1);
+  const totalPages = 5;
+
+  const handleApprovePage = () => {
+    alert('✅ Страница одобрена!');
+    nextPage();
+  };
+
+  const handleRejectPage = () => {
+    alert('❌ Страница отклонена и будет переделана');
+    nextPage();
+  };
+
+  const handleEditPage = () => {
+    alert('✏️ Редактирование страницы...');
+  };
+
+  const nextPage = () => {
+    if (currentPage < totalPages) setCurrentPage(currentPage + 1);
+  };
+
+  const prevPage = () => {
+    if (currentPage > 1) setCurrentPage(currentPage - 1);
+  };
+
   return (
     <div>
       <div className="flex items-center gap-3 mb-8">
@@ -47,15 +73,24 @@ export default function QAPage() {
           </div>
 
           <div className="flex gap-3">
-            <button className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700">
+            <button
+              onClick={handleApprovePage}
+              className="flex items-center gap-2 px-6 py-2 bg-green-600 text-white font-bold rounded-lg hover:bg-green-700"
+            >
               <CheckCircle2 className="w-4 h-4" />
               Одобрить
             </button>
-            <button className="flex items-center gap-2 px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700">
+            <button
+              onClick={handleRejectPage}
+              className="flex items-center gap-2 px-6 py-2 bg-red-600 text-white font-bold rounded-lg hover:bg-red-700"
+            >
               <AlertCircle className="w-4 h-4" />
               Отклонить
             </button>
-            <button className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700">
+            <button
+              onClick={handleEditPage}
+              className="flex items-center gap-2 px-6 py-2 bg-blue-600 text-white font-bold rounded-lg hover:bg-blue-700"
+            >
               <Edit className="w-4 h-4" />
               Редактировать
             </button>
@@ -63,12 +98,20 @@ export default function QAPage() {
         </div>
 
         <div className="text-center text-gray-600">
-          <p>Страница 1 из 5</p>
+          <p>Страница {currentPage} из {totalPages}</p>
           <div className="flex justify-center gap-2 mt-2">
-            <button className="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300">
+            <button
+              onClick={prevPage}
+              disabled={currentPage === 1}
+              className="flex items-center justify-center px-4 py-2 bg-gray-200 text-gray-600 rounded-lg hover:bg-gray-300 disabled:opacity-50"
+            >
               <ChevronLeft className="w-4 h-4" />
             </button>
-            <button className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
+            <button
+              onClick={nextPage}
+              disabled={currentPage === totalPages}
+              className="flex items-center justify-center px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 disabled:opacity-50"
+            >
               <ChevronRight className="w-4 h-4" />
             </button>
           </div>
