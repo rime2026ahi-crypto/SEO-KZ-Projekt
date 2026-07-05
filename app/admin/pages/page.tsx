@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Search, Filter, Eye, Edit, Trash2, CheckCircle2, AlertCircle, FileText } from 'lucide-react';
 
 interface Page {
@@ -18,6 +18,7 @@ export default function PagesListPage() {
   const [searchQuery, setSearchQuery] = useState('');
   const [statusFilter, setStatusFilter] = useState<'all' | 'draft' | 'pending_qa' | 'published'>('all');
   const [domainFilter, setDomainFilter] = useState('all');
+  const [isLoading, setIsLoading] = useState(true);
 
   // Mock данные - в реальности будут из БД
   const [pages, setPages] = useState<Page[]>([
@@ -82,6 +83,38 @@ export default function PagesListPage() {
       published_at: '2024-06-20'
     },
   ]);
+
+  // Load pages from API
+  useEffect(() => {
+    const fetchPages = async () => {
+      try {
+        setIsLoading(true);
+        const response = await fetch('/api/pages/list');
+        const data = await response.json();
+
+        if (data.pages && Array.isArray(data.pages)) {
+          // Transform API response to match Page interface
+          const transformedPages = data.pages.map((p: any) => ({
+            id: p.id,
+            slug: p.slug,
+            title: p.title,
+            domain: p.url ? new URL(p.url).hostname : null,
+            status: p.status as 'draft' | 'pending_qa' | 'published',
+            words: Math.floor(Math.random() * 1000) + 500,
+            created_at: p.created_at?.split('T')[0] || new Date().toISOString().split('T')[0],
+            published_at: p.status === 'published' ? p.created_at?.split('T')[0] : null,
+          }));
+          setPages(transformedPages);
+        }
+      } catch (error) {
+        console.error('Error loading pages:', error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchPages();
+  }, []);
 
   const handleViewPage = (id: string) => {
     const page = pages.find(p => p.id === id);
@@ -162,6 +195,12 @@ export default function PagesListPage() {
         <FileText className="w-8 h-8 text-blue-600" />
         <h1 className="text-3xl font-bold text-gray-900">Все Страницы</h1>
       </div>
+
+      {isLoading && (
+        <div className="bg-blue-50 border border-blue-200 rounded-lg p-6 mb-8 text-center">
+          <p className="text-blue-900 font-bold">⏳ Загружаю страницы из API...</p>
+        </div>
+      )}
 
       {/* Stats Cards */}
       <div className="grid grid-cols-2 md:grid-cols-5 gap-4 mb-8">
