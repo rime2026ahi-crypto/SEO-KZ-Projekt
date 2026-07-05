@@ -1,5 +1,5 @@
 # Build stage
-FROM node:18-alpine AS builder
+FROM node:20-alpine AS builder
 
 WORKDIR /app
 
@@ -7,7 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install dependencies
-RUN npm ci --omit=dev && \
+RUN npm install && \
     npm install --save-dev typescript @types/node @types/react next eslint eslint-config-next
 
 # Copy source code
@@ -18,7 +18,7 @@ ENV NODE_OPTIONS="--max_old_space_size=512"
 RUN npm run build
 
 # Production stage
-FROM node:18-alpine
+FROM node:20-alpine
 
 WORKDIR /app
 
@@ -26,7 +26,7 @@ WORKDIR /app
 COPY package*.json ./
 
 # Install only production dependencies
-RUN npm ci --omit=dev
+RUN npm install --production
 
 # Copy built app from builder
 COPY --from=builder /app/.next ./.next
