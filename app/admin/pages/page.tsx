@@ -20,7 +20,7 @@ export default function PagesListPage() {
   const [domainFilter, setDomainFilter] = useState('all');
 
   // Mock данные - в реальности будут из БД
-  const [pages] = useState<Page[]>([
+  const [pages, setPages] = useState<Page[]>([
     {
       id: '1',
       slug: 'almaty-remont-trub',
@@ -82,6 +82,23 @@ export default function PagesListPage() {
       published_at: '2024-06-20'
     },
   ]);
+
+  const handleViewPage = (id: string) => {
+    const page = pages.find(p => p.id === id);
+    if (page) alert(`📄 ${page.title}\nСлаг: ${page.slug}\nСтатус: ${page.status}`);
+  };
+
+  const handleEditPage = (id: string) => {
+    const page = pages.find(p => p.id === id);
+    if (page) alert(`✏️ Редактирование: ${page.title}`);
+  };
+
+  const handleDeletePage = (id: string) => {
+    if (confirm('Удалить страницу?')) {
+      setPages(pages.filter(p => p.id !== id));
+      alert('✅ Страница удалена!');
+    }
+  };
 
   // Фильтрация
   const filtered = pages.filter(page => {
@@ -262,13 +279,13 @@ export default function PagesListPage() {
                     <td className="px-6 py-4 text-sm text-gray-600">{page.created_at}</td>
                     <td className="px-6 py-4">
                       <div className="flex gap-2">
-                        <button className="p-2 hover:bg-blue-100 rounded-lg transition-colors" title="Просмотр">
+                        <button onClick={() => handleViewPage(page.id)} className="p-2 hover:bg-blue-100 rounded-lg transition-colors" title="Просмотр">
                           <Eye className="w-4 h-4 text-blue-600" />
                         </button>
-                        <button className="p-2 hover:bg-green-100 rounded-lg transition-colors" title="Редактировать">
+                        <button onClick={() => handleEditPage(page.id)} className="p-2 hover:bg-green-100 rounded-lg transition-colors" title="Редактировать">
                           <Edit className="w-4 h-4 text-green-600" />
                         </button>
-                        <button className="p-2 hover:bg-red-100 rounded-lg transition-colors" title="Удалить">
+                        <button onClick={() => handleDeletePage(page.id)} className="p-2 hover:bg-red-100 rounded-lg transition-colors" title="Удалить">
                           <Trash2 className="w-4 h-4 text-red-600" />
                         </button>
                       </div>
